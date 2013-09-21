@@ -8,6 +8,7 @@ module Forem
     before_filter :authorize_edit_post_for_forum!, :only => [:edit, :update]
     before_filter :find_post_for_topic, :only => [:edit, :update, :destroy]
     before_filter :ensure_post_ownership!, :only => [:destroy]
+    before_filter :set_return_to
 
     def new
       @post = @topic.posts.build
@@ -59,7 +60,11 @@ module Forem
 
     def create_successful
       flash[:notice] = t("forem.post.created")
-      redirect_to forum_topic_url(@topic.forum, @topic, :page => @topic.last_page)
+      #redirect_to forum_topic_url(@topic.forum, @topic, :page => @topic.last_page)
+      respond_to do |format|
+        format.html { redirect_to :back }
+        format.js
+      end
     end
 
     def create_failed
@@ -72,15 +77,26 @@ module Forem
       if @post.topic.posts.count == 0
         @post.topic.destroy
         flash[:notice] = t("forem.post.deleted_with_topic")
-        redirect_to [@topic.forum]
+        #redirect_to [@topic.forum]
+        #redirect_to :back
+        respond_to do |format|
+          format.html { redirect_to :back }
+          format.js
+        end
       else
         flash[:notice] = t("forem.post.deleted")
-        redirect_to [@topic.forum, @topic]
+        #redirect_to [@topic.forum, @topic]
+        #redirect_to :back
+        respond_to do |format|
+          format.html { redirect_to :back }
+          format.js
+        end
       end
     end
 
     def update_successful
-      redirect_to [@topic.forum, @topic], :notice => t('edited', :scope => 'forem.post')
+      #redirect_to [@topic.forum, @topic], :notice => t('edited', :scope => 'forem.post')
+      redirect_to session.delete(:return_to), :notice => t('edited', :scope => 'forem.post')
     end
 
     def update_failed
@@ -91,7 +107,8 @@ module Forem
     def ensure_post_ownership!
       unless @post.owner_or_admin? forem_user
         flash[:alert] = t("forem.post.cannot_delete")
-        redirect_to [@topic.forum, @topic] and return
+        #redirect_to [@topic.forum, @topic] and return
+        redirect_to :back and return
       end
     end
 
@@ -114,12 +131,17 @@ module Forem
     def reject_locked_topic!
       if @topic.locked?
         flash.alert = t("forem.post.not_created_topic_locked")
-        redirect_to [@topic.forum, @topic] and return
+        #redirect_to [@topic.forum, @topic] and return
+        redirect_to :back and return
       end
     end
 
     def find_reply_to_post
       @reply_to_post = @topic.posts.find_by_id(params[:reply_to_id])
+    end
+    
+    def set_return_to
+      session[:return_to] ||= request.referer
     end
   end
 end
