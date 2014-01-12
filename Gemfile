@@ -7,14 +7,13 @@ gemspec
 gem 'pry-rails'
 gem 'pry-nav'
 gem 'cancan', git: "https://github.com/nukturnal/cancan.git"
-gem 'friendly_id', github: "FriendlyId/friendly_id"
 
 platforms :jruby do
   gem "activerecord-jdbc-adapter", :require => false
 end
 
 group :test do
-  platforms :ruby do
+  platforms :ruby, :mingw do
     gem "forem-redcarpet"
     gem "mysql2"
     gem "pg"
@@ -25,7 +24,7 @@ group :test do
     gem "activerecord-jdbcmysql-adapter", :require => false
     gem "activerecord-jdbcpostgresql-adapter", :require => false
     gem "activerecord-jdbcsqlite3-adapter", :require => false
-    gem "forem-kramdown"
+    gem "forem-kramdown", :github => "phlipper/forem-kramdown", :branch => "master"
   end
 end
 

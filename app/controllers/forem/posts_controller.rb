@@ -15,7 +15,12 @@ module Forem
       @post = @topic.posts.build
       find_reply_to_post
 
-      @post.text = view_context.forem_quote(@reply_to_post.text) if params[:quote]
+      if params[:quote] && @reply_to_post
+        @post.text = view_context.forem_quote(@reply_to_post.text)
+      elsif params[:quote] && !@reply_to_post
+        flash[:notice] = t("forem.post.cannot_quote_deleted_post")
+        redirect_to [@topic.forum, @topic]
+      end
     end
 
     def create
@@ -58,14 +63,14 @@ module Forem
     def authorize_edit_post_for_forum!
       authorize! :edit_post, @topic.forum
     end
-    
+
     def authorize_destroy_post_for_forum!
       authorize! :destroy_post, @topic.forum
     end
 
     def create_successful
       flash[:notice] = t("forem.post.created")
-      #redirect_to forum_topic_url(@topic.forum, @topic, :page => @topic.last_page)
+      #redirect_to forum_topic_url(@topic.forum, @topic, pagination_param => @topic.last_page)
       respond_to do |format|
         format.html { redirect_to :back }
         format.js

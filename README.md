@@ -9,10 +9,6 @@ Forem is an engine for Rails that aims to be the best little forum system ever.
 The end goal is to have an engine that can be dropped into an application that
 provides the basic functionality of forums, topics and posts.
 
-**We are currently undergoing large changes.** If you want to use this project, please
-keep this in mind. You can view a list of the intended changes on our [Version 1.0
-Roadmap](https://github.com/radar/forem/wiki/1.0-Roadmap)
-
 # Demo
 
 A demo application can be found at [http://forem.heroku.com](http://forem.heroku.com), and the source for this application can be found on the [forem.heroku.com
@@ -30,9 +26,9 @@ gem 'forem', :git => "git://github.com/radar/forem.git"
 
 And then one of `kaminari` or `will_paginate`
 ```ruby
-gem 'kaminari', '0.13.0'
+gem 'kaminari', '0.15.0'
 # OR
-gem 'will_paginate', '3.0.3'
+gem 'will_paginate', '3.0.5'
 ```
 
 ## Run the installer
@@ -56,6 +52,9 @@ def to_s
 end
 ```
 
+Please note that if you are using Devise, User model does not have `name` column by default,
+so you either should use custom migration to add it or use another column (`email` for example).
+
 It also depends on an `email` method for displaying avatars using [Gravatar](http://gravatar.com). If you don't have an `email` attribute on the model, define a new method:
 
 ```ruby
@@ -63,6 +62,24 @@ def email
   email_address
 end
 ```
+
+## Require basic Forem assets
+
+Add this line to your `application.js` file to load required JavaScript files:
+
+```js
+//= require forem
+```
+
+Add this line to your `application.css` to apply required styling:
+
+```css
+*= require 'forem/base'
+```
+
+## Specify formatter to use
+
+If you want to provide users with an extended formatting capability, you should pick a [formatter](https://github.com/radar/forem/wiki/Formatters) to use. If you do not use a formatter users will not be able to insert newlines in their posts and do some other fancy stuff, however quoting will work fine.
 
 And you're done! Yaaay!
 
@@ -209,5 +226,6 @@ If all the tests are passing (they usually are), then you're good to go! Develop
 * [Goodsmiths](https://www.goodsmiths.com/hub)
 * [Now Novel](http://nownovel.com/bookwriting)
 * [OrbsCCG](http://orbsccg.com/forums/)
+* [Airesis](http://www.airesis.eu)
 
 If you want yours added here, just ask!

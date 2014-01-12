@@ -51,6 +51,9 @@ en:
           add_member: Add
           add_a_new_member: "Add a new member"
           current_members: "Current Members"
+          remove_member: "Remove member"
+          member_removed: "The selected user has been removed from the group."
+          no_member_to_remove: "The selected user does not belong to this group."
         edit: Edit
         delete: Delete
         name: Name
@@ -156,7 +159,7 @@ en:
         edit: Edit
       created: Your reply has been posted.
       new: Post reply to
-      edit: Edit
+      edit: Editing post
       not_created: Your reply could not be posted.
       not_created_topic_locked: You cannot reply to a locked topic.
       edited: Your post has been edited.
@@ -165,6 +168,7 @@ en:
       deleted_with_topic: Only post in topic deleted. Topic also deleted.
       cannot_delete: You cannot delete a post you do not own.
       in_reply_to: In reply to
+      cannot_quote_deleted_post: The post you tried to quote does not exist anymore.
     posts:
       moderation:
         moderate: Moderate
