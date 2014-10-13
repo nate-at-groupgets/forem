@@ -1,0 +1,4 @@
+<%= I18n.t('needs_moderation', :scope => 'forem.topic') %> You can view it here:
+
+<%= forem.forum_topic_url(@post.topic.forum_id, @post.topic) %>
+

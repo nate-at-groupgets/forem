@@ -113,7 +113,11 @@ module Forem
     end
 
     def skip_pending_review
-      approve! unless user && user.forem_moderate_posts?
+      if user && user.forem_moderate_posts?
+        SubscriptionMailer.needs_moderation(self.id).deliver
+      else
+        approve!
+      end
     end
 
     def approve_user
