@@ -7,6 +7,8 @@ gemspec
 gem 'pry-rails'
 gem 'pry-nav'
 gem 'cancan', git: "https://github.com/nukturnal/cancan.git"
+gem 'delayed_job'
+gem 'delayed_job_active_record'
 
 platforms :jruby do
   gem "activerecord-jdbc-adapter", :require => false

@@ -1,15 +1,15 @@
 module Forem
   class PostsController < Forem::ApplicationController
-    before_filter :authenticate_forem_user
-    before_filter :find_topic
-    before_filter :reject_locked_topic!, :only => [:create]
-    before_filter :block_spammers, :only => [:new, :create]
-    before_filter :authorize_reply_for_topic!, :only => [:new, :create]
-    before_filter :authorize_edit_post_for_forum!, :only => [:edit, :update]
-    before_filter :find_post_for_topic, :only => [:edit, :update, :destroy]
-    before_filter :ensure_post_ownership!, :only => [:destroy]
-    before_filter :authorize_destroy_post_for_forum!, :only => [:destroy]
-    before_filter :set_return_to
+    before_action :authenticate_forem_user
+    before_action :find_topic
+    before_action :reject_locked_topic!, :only => [:create]
+    before_action :block_spammers, :only => [:new, :create]
+    before_action :authorize_reply_for_topic!, :only => [:new, :create]
+    before_action :authorize_edit_post_for_forum!, :only => [:edit, :update]
+    before_action :find_post_for_topic, :only => [:edit, :update, :destroy]
+    before_action :ensure_post_ownership!, :only => [:destroy]
+    before_action :authorize_destroy_post_for_forum!, :only => [:destroy]
+    before_action :set_return_to
 
     def new
       @post = @topic.posts.build
@@ -72,7 +72,7 @@ module Forem
       flash[:notice] = t("forem.post.created")
       #redirect_to forum_topic_url(@topic.forum, @topic, pagination_param => @topic.last_page)
       respond_to do |format|
-        format.html { redirect_to :back }
+        format.html { redirect_back fallback_location: root_path }
         format.js
       end
     end
@@ -90,7 +90,7 @@ module Forem
         #redirect_to [@topic.forum]
         #redirect_to :back
         respond_to do |format|
-          format.html { redirect_to :back }
+          format.html { redirect_back fallback_location: root_path }
           format.js
         end
       else
@@ -98,7 +98,7 @@ module Forem
         #redirect_to [@topic.forum, @topic]
         #redirect_to :back
         respond_to do |format|
-          format.html { redirect_to :back }
+          format.html { redirect_back fallback_location: root_path }
           format.js
         end
       end
@@ -118,7 +118,7 @@ module Forem
       unless @post.owner_or_admin? forem_user
         flash[:alert] = t("forem.post.cannot_delete")
         #redirect_to [@topic.forum, @topic] and return
-        redirect_to :back and return
+        redirect_back fallback_location: root_path and return
       end
     end
 
@@ -134,7 +134,7 @@ module Forem
       if forem_user.forem_spammer?
         flash[:alert] = t('forem.general.flagged_for_spam') + ' ' +
                         t('forem.general.cannot_create_post')
-        redirect_to :back
+        redirect_back fallback_location: root_path
       end
     end
 
@@ -142,7 +142,7 @@ module Forem
       if @topic.locked?
         flash.alert = t("forem.post.not_created_topic_locked")
         #redirect_to [@topic.forum, @topic] and return
-        redirect_to :back and return
+        redirect_back fallback_location: root_path and return
       end
     end
 
