@@ -1,14 +1,19 @@
 source "https://rubygems.org"
 
-gem 'forem-theme-base', :git => "git://github.com/radar/forem-theme-base", :branch => "master"
+gem 'forem-theme-base', :git => "git://github.com/knewter/forem-theme-base", :branch => "master"
 
 gemspec
 
 gem 'pry-rails'
 gem 'pry-nav'
-gem 'cancan', git: "https://github.com/nukturnal/cancan.git"
+gem 'cancancan'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
+gem 'rails', '~> 5.0.0'
+gem 'activesupport'
+gem 'listen'
+gem 'rspec-activemodel-mocks'
+gem 'yajl-ruby', '>= 1.3.0'
 
 platforms :jruby do
   gem "activerecord-jdbc-adapter", :require => false
@@ -16,10 +21,9 @@ end
 
 group :test do
   platforms :ruby, :mingw do
-    gem "forem-redcarpet"
+    gem "forem-redcarpet", :github => "trakt/forem-redcarpet"
     gem "mysql2"
-    gem "pg"
-    gem "sqlite3"
+    gem "sqlite3", '~> 1.3.6'
   end
 
   platforms :jruby do

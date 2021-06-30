@@ -4,6 +4,7 @@ require File.expand_path("../dummy/config/environment.rb",  __FILE__)
 
 require "rspec/rails"
 require "capybara/rspec"
+require 'rspec/active_model/mocks'
 
 ENGINE_RAILS_ROOT = File.join(File.dirname(__FILE__), "../")
 
@@ -13,3 +14,6 @@ Dir[File.join(ENGINE_RAILS_ROOT, "spec/support/**/*.rb")].each {|f| require f }
 
 require 'forem/testing_support/factories'
 
+RSpec.configure do |config|
+    config.include Capybara::DSL
+end

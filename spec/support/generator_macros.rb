@@ -24,6 +24,6 @@ end
 
 RSpec.configure do |c|
   c.include Forem::GeneratorMacros, :example_group => {
-    :file_path => c.escaped_path(%w[spec (generators)])
+    :file_path => /spec\/generators/
   }
 end

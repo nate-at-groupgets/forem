@@ -14,11 +14,16 @@ module Forem
       # only pass id to make it easier to send emails using resque
       @post = Post.find(post_id)
       @moderators = []
+      # forum is delegated to topic, but this might not be set during testing
+      return unless @post.topic
       @post.forum.moderators.each do |group|
         @moderators += group.members
       end
-
-      mail(:to => @moderators.collect(&:email), :subject => I18n.t('forem.topic.needs_moderation'))
+      if @moderators.length()
+        Rails.logger.info("No moderators for this forum, not sending mails")
+      else
+        mail(:to => @moderators.collect(&:email), :subject => I18n.t('forem.topic.needs_moderation'))
+      end
     end
   end
 end

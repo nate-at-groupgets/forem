@@ -1,10 +1,10 @@
 require 'friendly_id'
 
 module Forem
-  class Topic < ActiveRecord::Base
+  class Topic < ApplicationRecord
     include Forem::Concerns::Viewable
     include Forem::Concerns::NilUser
-    include Workflow
+    include WorkflowActiverecord
 
     workflow_column :state
     workflow do

@@ -1,7 +1,7 @@
 require 'friendly_id'
 
 module Forem
-  class Forum < ActiveRecord::Base
+  class Forum < ApplicationRecord
     include Forem::Concerns::Viewable
 
     extend FriendlyId

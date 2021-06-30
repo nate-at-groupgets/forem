@@ -1,12 +1,13 @@
 # Fix for #185 and build issues
 require 'active_support/core_ext/kernel/singleton_class'
+require 'active_support/all'
 
 require 'forem/engine'
 require 'forem/autocomplete'
 require 'forem/default_permissions'
 require 'forem/platform'
 require 'forem/sanitizer'
-require 'workflow'
+require 'workflow_activerecord'
 require 'sanitize'
 
 require 'decorators'

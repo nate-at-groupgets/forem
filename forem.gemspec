@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
   # s.add_dependency 'rails'
   s.add_dependency 'simple_form'
   s.add_dependency 'sanitize'
-  s.add_dependency 'workflow'
+  s.add_dependency 'workflow-activerecord'
   s.add_dependency 'gemoji'
   s.add_dependency 'decorators'
   s.add_dependency 'select2-rails'

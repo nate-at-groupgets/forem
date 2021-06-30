@@ -10,6 +10,6 @@ end
 
 RSpec.configure do |c|
   c.include Forem::MigrationMacros, :example_group => {
-    :file_path => c.escaped_path(%w[spec (migrations)])
+    :file_path => /spec\/migrations/
   }
 end

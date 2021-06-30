@@ -1,6 +1,6 @@
 module Forem
-  class Post < ActiveRecord::Base
-    include Workflow
+  class Post < ApplicationRecord
+    include WorkflowActiverecord
     include Forem::Concerns::NilUser
 
     workflow_column :state

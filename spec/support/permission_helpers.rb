@@ -6,5 +6,5 @@ module PermissionHelpers
 end
 
 RSpec.configure do |c|
-  c.include PermissionHelpers, :type => :feature
+  c.include PermissionHelpers
 end

@@ -1,11 +1,23 @@
 require 'spec_helper'
 
-describe Forem::PostsController do
+describe Forem::PostsController, type: :controller do
+  let!(:moderator) { FactoryGirl.create(:user, :login => "moderator") }
+  let!(:group) do
+    group = FactoryGirl.create(:group)
+    group.members << moderator
+    group.save!
+    group
+  end
+
   context "not signed in" do
     let(:forum) { create(:forum) }
     let(:user)  { create(:user) }
     let(:topic) { create(:approved_topic, :forum => forum, :user => user) }
     let(:first_post) { topic.posts.first }
+
+    before do
+      forum.moderators << group
+    end
 
     it "cannot delete posts" do
       delete :destroy, :topic_id => topic.to_param, :id => first_post.to_param
@@ -19,6 +31,7 @@ describe Forem::PostsController do
     let(:user)  { create(:user) }
     let(:topic) { create(:approved_topic, :forum => forum, :user => user) }
     before do
+      forum.moderators << group
       sign_in(user)
     end
 

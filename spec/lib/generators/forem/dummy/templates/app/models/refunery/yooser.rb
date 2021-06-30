@@ -1,5 +1,5 @@
 module Refunery
-  class Yooser < ActiveRecord::Base
+  class Yooser < ApplicationRecord
 
   end
 end

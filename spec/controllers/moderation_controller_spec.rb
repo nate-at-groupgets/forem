@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Forem::ModerationController do
+describe Forem::ModerationController, type: :controller do
   before do
     controller.stub :forum => stub_model(Forem::Forum)
     controller.stub :forem_admin? => false

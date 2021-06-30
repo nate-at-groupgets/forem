@@ -58,7 +58,7 @@ describe Forem::Topic do
       it "only subscribes users once" do
         expect {
           2.times { topic.subscribe_user(subscription_user.id) }
-        }.to change { topic.subscriptions.count}.from(topic.subscriptions.count).by(1)
+        }.to change { topic.subscriptions.count}.by(1)
       end
     end
 
@@ -68,7 +68,7 @@ describe Forem::Topic do
       it "increments the overall topic view count" do
         expect {
           topic.register_view_by(view_user)
-        }.to change { topic.views_count }.from(topic.views_count).by(1)
+        }.to change { topic.views_count }.by(1)
       end
 
       it "increments the users view count for the topic" do

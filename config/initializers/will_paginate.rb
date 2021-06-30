@@ -7,9 +7,9 @@ if defined?(WillPaginate)
           def total_count() count end
         end
       end
-      module CollectionMethods
-        alias_method :num_pages, :total_pages
-      end
+      # module CollectionMethods
+      #   alias_method :num_pages, :total_pages
+      # end
     end
   end
 end

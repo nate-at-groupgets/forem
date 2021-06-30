@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'timecop'
 
-describe Forem::Post do
+RSpec.describe Forem::Post, type: :model do
   let!(:forum) { stub_model(Forem::Forum) }
   let!(:topic) { stub_model(Forem::Topic, :forum => forum) }
   let!(:post) { FactoryGirl.create(:post, :topic => topic) }
