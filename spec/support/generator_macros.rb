@@ -23,7 +23,5 @@ module Forem
 end
 
 RSpec.configure do |c|
-  c.include Forem::GeneratorMacros, :example_group => {
-    :file_path => /spec\/generators/
-  }
+  c.include Forem::GeneratorMacros, :file_path => /spec\/generators/
 end

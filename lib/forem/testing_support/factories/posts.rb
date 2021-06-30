@@ -1,10 +1,10 @@
-FactoryGirl.define do
-  factory :post, :class => Forem::Post do |t|
-    t.text "This is a brand new post!"
-    t.user {|u| u.association(:user) }
+FactoryBot.define do
+  factory :post, :class => Forem::Post do
+    text { "This is a brand new post!" }
+    association :user
 
-    trait :approved do |post|
-     post.state 'approved'
+    trait :approved do
+     state { 'approved' }
     end
 
     factory :approved_post, :traits => [:approved]

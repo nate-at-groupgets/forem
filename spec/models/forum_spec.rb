@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Forem::Forum do
-  let!(:forum) { FactoryGirl.create(:forum) }
+  let!(:forum) { FactoryBot.create(:forum) }
 
   it "is valid with valid attributes" do
     forum.should be_valid
@@ -47,11 +47,11 @@ describe Forem::Forum do
 
     # Regression tests + tests related to fix for #42
     context "last_post" do
-      let!(:visible_topic) { FactoryGirl.create(:topic, :forum => forum) }
-      let!(:hidden_topic) { FactoryGirl.create(:topic, :forum => forum, :hidden => true) }
+      let!(:visible_topic) { FactoryBot.create(:topic, :forum => forum) }
+      let!(:hidden_topic) { FactoryBot.create(:topic, :forum => forum, :hidden => true) }
 
-      let(:user) { FactoryGirl.create(:user) }
-      let(:admin) { FactoryGirl.create(:admin) }
+      let(:user) { FactoryBot.create(:user) }
+      let(:admin) { FactoryBot.create(:admin) }
 
 
       context "finding the last visible post for a user" do
@@ -99,13 +99,13 @@ describe Forem::Forum do
 
     context "moderator?" do
       it "no user is no moderator" do
-        forum.moderator?(nil).should be_false
+        forum.moderator?(nil).should be_falsey
       end
 
       it "is a moderator if group ids intersect" do
         forum.stub :moderator_ids => [1,2]
         user = double :forem_group_ids => [2,3]
-        forum.moderator?(user).should be_true
+        forum.moderator?(user).should be true
       end
 
     end

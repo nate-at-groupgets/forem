@@ -1,5 +1,5 @@
-FactoryGirl.define do
-  factory :category, :class => Forem::Category do |f|
-    f.name "Test Category"
+FactoryBot.define do
+  factory :category, :class => Forem::Category do
+    name { "Test Category" }
   end
 end

@@ -1,7 +1,7 @@
-FactoryGirl.define do
-  factory :forum, :class => Forem::Forum do |f|
-    f.title "Welcome to Forem!"
-    f.description "A placeholder forum."
-    f.category {|t| t.association(:category) }
+FactoryBot.define do
+  factory :forum, :class => Forem::Forum do
+    title { "Welcome to Forem!" }
+    description { "A placeholder forum." }
+    association :category
   end
 end

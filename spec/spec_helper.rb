@@ -16,4 +16,7 @@ require 'forem/testing_support/factories'
 
 RSpec.configure do |config|
     config.include Capybara::DSL
+    config.mock_with :rspec do |mocks|
+        mocks.syntax = :should
+    end
 end

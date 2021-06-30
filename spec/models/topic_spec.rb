@@ -3,7 +3,7 @@ require 'timecop'
 
 describe Forem::Topic do
   let(:topic) do
-    FactoryGirl.create(:topic)
+    FactoryBot.create(:topic)
   end
 
   it "is valid with valid attributes" do
@@ -31,7 +31,7 @@ describe Forem::Topic do
   end
 
   describe "approving" do
-    let(:unapproved_topic) { FactoryGirl.create(:topic, :user => FactoryGirl.create(:user)) }
+    let(:unapproved_topic) { FactoryBot.create(:topic, :user => FactoryBot.create(:user)) }
 
     it "switches pending review status" do
       Forem::Post.any_instance.stub(:subscribe_replier)
@@ -49,7 +49,7 @@ describe Forem::Topic do
 
   describe "helper methods" do
     describe "#subscribe_user" do
-      let(:subscription_user) { FactoryGirl.create(:user) }
+      let(:subscription_user) { FactoryBot.create(:user) }
       it "subscribes a user to the topic" do
         topic.subscribe_user(subscription_user.id)
         topic.subscriptions.last.subscriber.should == subscription_user
@@ -63,7 +63,7 @@ describe Forem::Topic do
     end
 
     describe "#register_view_by" do
-      let!(:view_user) { FactoryGirl.create(:user) }
+      let!(:view_user) { FactoryBot.create(:user) }
 
       it "increments the overall topic view count" do
         expect {

@@ -24,12 +24,13 @@ module Forem
 
     def process_forem_action(action, parameters = nil, session = nil, flash = nil, method = "GET")
       parameters ||= {}
-      process(action, method, parameters.merge!(:use_route => :forem), session, flash)
+      flash ||= {}
+      process action, method, params: parameters.merge!(:use_route => :forem), flash: flash, session: session
     end
   end
 end
 
 RSpec.configure do |c|
-  c.include Forem::ControllerHacks, :type => :controller
+  # c.include Forem::ControllerHacks, :type => :controller
 end
 

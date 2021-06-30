@@ -42,8 +42,8 @@ describe Forem::Generators::InstallGenerator do
     Forem::Forum.count.should == 0
     Forem::Topic.count.should == 0
 
-    FactoryGirl.create(:user)
-    FactoryGirl.create(:category)
+    FactoryBot.create(:user)
+    FactoryBot.create(:category)
     Forem::Engine.load_seed
 
     Forem::Forum.count.should == 1

@@ -1,5 +1,5 @@
-FactoryGirl.define do
-  factory :group, :class => Forem::Group do |f|
-    f.name "Special People"
+FactoryBot.define do
+  factory :group, :class => Forem::Group do
+    name { "Special People" }
   end
 end

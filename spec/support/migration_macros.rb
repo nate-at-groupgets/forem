@@ -9,7 +9,5 @@ module Forem
 end
 
 RSpec.configure do |c|
-  c.include Forem::MigrationMacros, :example_group => {
-    :file_path => /spec\/migrations/
-  }
+  c.include Forem::MigrationMacros, :file_path => /spec\/generators/
 end

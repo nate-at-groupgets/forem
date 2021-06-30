@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe Forem::TopicsController, type: :controller do
-  let!(:moderator) { FactoryGirl.create(:user, :login => "moderator") }
+  let!(:moderator) { FactoryBot.create(:user, :login => "moderator") }
   let!(:group) do
-    group = FactoryGirl.create(:group)
+    group = FactoryBot.create(:group)
     group.members << moderator
     group.save!
     group
@@ -14,22 +14,22 @@ describe Forem::TopicsController, type: :controller do
     let!(:topic) { create(:topic) }
     before do
       forum.moderators << group
-      user = FactoryGirl.create(:user)
+      user = FactoryBot.create(:user)
       sign_in(user)
       controller.current_user.stub :can_read_topic? => false
     end
 
     # Regression test for #122
     specify do
-      get :subscribe, :forum_id => forum.id, :id => topic.id
+      get :subscribe, :params => { :forum_id => forum.id, :id => topic.id }
       flash[:alert].should == "The topic you are looking for could not be found."
     end
   end
 
   context "without permission to read a topic" do
-    let(:forum) { FactoryGirl.create(:forum) }
-    let(:topic) { FactoryGirl.create(:approved_topic, :forum => forum) }
-    let(:user) { FactoryGirl.create(:user) }
+    let(:forum) { FactoryBot.create(:forum) }
+    let(:topic) { FactoryBot.create(:approved_topic, :forum => forum) }
+    let(:user) { FactoryBot.create(:user) }
 
     before do
       forum.moderators << group
@@ -38,7 +38,7 @@ describe Forem::TopicsController, type: :controller do
     end
 
     it "cannot subscribe to a topic" do
-      post :subscribe, :forum_id => forum.id, :id => topic.id
+      post :subscribe, :params => { :forum_id => forum.id, :id => topic.id }
 
       # response.should redirect_to(root_path)
       flash[:alert].should == I18n.t('forem.access_denied')
@@ -55,7 +55,7 @@ describe Forem::TopicsController, type: :controller do
     end
 
     it "cannot delete topics" do
-      delete :destroy, :forum_id => topic.forum.to_param, :topic_id => topic.to_param, :id => topic.to_param
+      delete :destroy, :params => { :forum_id => topic.forum.to_param, :topic_id => topic.to_param, :id => topic.to_param }
       response.should redirect_to('/users/sign_in')
       flash.alert.should == "You must sign in first."
     end

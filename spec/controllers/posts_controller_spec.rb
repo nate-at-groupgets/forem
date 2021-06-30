@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe Forem::PostsController, type: :controller do
-  let!(:moderator) { FactoryGirl.create(:user, :login => "moderator") }
+  let!(:moderator) { FactoryBot.create(:user, :login => "moderator") }
   let!(:group) do
-    group = FactoryGirl.create(:group)
+    group = FactoryBot.create(:group)
     group.members << moderator
     group.save!
     group
@@ -20,7 +20,7 @@ describe Forem::PostsController, type: :controller do
     end
 
     it "cannot delete posts" do
-      delete :destroy, :topic_id => topic.to_param, :id => first_post.to_param
+      delete :destroy, :params => { :topic_id => topic.to_param, :id => first_post.to_param }
       response.should redirect_to('/users/sign_in')
       flash.alert.should == "You must sign in first."
     end
@@ -42,7 +42,7 @@ describe Forem::PostsController, type: :controller do
         end
 
         it 'can reply to topic' do
-          post :create, :topic_id => topic.to_param, :post => { 'text' => 'non-sneaky reply' }
+          post :create, :params => { :topic_id => topic.to_param, :post => { 'text' => 'non-sneaky reply' } }
           flash[:notice].should == "Your reply has been posted."
         end
       end
@@ -54,7 +54,7 @@ describe Forem::PostsController, type: :controller do
         end
 
         it 'cannot reply to topic' do
-          post :create, :topic_id => topic.to_param, :post => { 'text' => 'sneaky reply' }
+          post :create, :params => { :topic_id => topic.to_param, :post => { 'text' => 'sneaky reply' } }
           flash[:alert].should == 'You are not allowed to do that.'
         end
       end
@@ -62,7 +62,7 @@ describe Forem::PostsController, type: :controller do
     
     context 'when attempting to destroy posts' do
       it 'can with permission' do
-        delete :destroy, :topic_id => topic, :id => topic.posts.first
+        delete :destroy, :params => { :topic_id => topic, :id => topic.posts.first }
         flash[:notice].should == "Only post in topic deleted. Topic also deleted."
       end
       
@@ -70,7 +70,7 @@ describe Forem::PostsController, type: :controller do
         # remove destroy permission
         controller.current_user.stub :can_destroy_forem_posts? => false
         
-        delete :destroy, :topic_id => topic, :id => topic.posts.first
+        delete :destroy, :params => { :topic_id => topic, :id => topic.posts.first }
         flash[:alert].should == 'You are not allowed to do that.'
         response.should redirect_to(root_path)
       end
